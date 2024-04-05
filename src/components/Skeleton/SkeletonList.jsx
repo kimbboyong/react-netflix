@@ -12,9 +12,6 @@ const List = styled.div`
   gap: 15px;
   min-width: 1200px;
   margin-bottom: 30px;
-  /* @media screen and (max-width: 1280px) {
-    grid-template-columns: repeat(3, 1fr);
-  } */
 `;
 
 const SkeletonList = () => {
