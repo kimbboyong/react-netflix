@@ -3,68 +3,66 @@ import React from "react";
 import { styled } from "styled-components";
 
 const Wrapper = styled.div`
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
   padding: 0 20px;
+  overflow: hidden;
 `;
-const Inner = styled.div``;
 
 const List = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
   gap: 15px;
+  min-width: 1200px;
   margin-bottom: 30px;
+  /* @media screen and (max-width: 1280px) {
+    grid-template-columns: repeat(3, 1fr);
+  } */
 `;
 
 const SkeletonList = () => {
   return (
     <Wrapper spacing={1}>
-      <Inner>
+      <Skeleton
+        sx={{
+          bgcolor: "#595959",
+          marginBottom: "15px",
+        }}
+        variant="rounded"
+        width={200}
+        height={40}
+      />
+      <List>
         <Skeleton
           sx={{
             bgcolor: "#595959",
-            marginBottom: "15px",
           }}
           variant="rounded"
-          width={200}
-          height={40}
+          width={"100%"}
+          height={200}
         />
-        <List>
-          <Skeleton
-            sx={{
-              bgcolor: "#595959",
-            }}
-            variant="rounded"
-            width={"100%"}
-            height={200}
-          />
-          <Skeleton
-            sx={{
-              bgcolor: "#595959",
-            }}
-            variant="rounded"
-            width={"100%"}
-            height={200}
-          />
-          <Skeleton
-            sx={{
-              bgcolor: "#595959",
-            }}
-            variant="rounded"
-            width={"100%"}
-            height={200}
-          />
-          <Skeleton
-            sx={{
-              bgcolor: "#595959",
-            }}
-            variant="rounded"
-            width={"100%"}
-            height={200}
-          />
-        </List>
-      </Inner>
+        <Skeleton
+          sx={{
+            bgcolor: "#595959",
+          }}
+          variant="rounded"
+          width={"100%"}
+          height={200}
+        />
+        <Skeleton
+          sx={{
+            bgcolor: "#595959",
+          }}
+          variant="rounded"
+          width={"100%"}
+          height={200}
+        />
+        <Skeleton
+          sx={{
+            bgcolor: "#595959",
+          }}
+          variant="rounded"
+          width={"100%"}
+          height={200}
+        />
+      </List>
     </Wrapper>
   );
 };

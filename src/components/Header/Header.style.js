@@ -5,9 +5,6 @@ export const Wrapper = styled.div`
   background-color: #000;
 `;
 export const Inner = styled.div`
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
   padding: 0 20px;
   height: 100%;
   display: flex;
@@ -26,6 +23,7 @@ export const Txt = styled.div`
   gap: 10px;
   a {
     color: #ccc;
+    text-decoration: none;
   }
 `;
 
@@ -35,13 +33,18 @@ export const Logo = styled.div`
     max-width: 100%;
   }
 `;
+export const Button = styled.div`
+  background-color: #d32f30;
+  color: #fff;
+`;
 
 export const Search = styled.div`
   display: flex;
   gap: 10px;
 `;
 export const InputText = styled.input`
-  padding: 0 10px;
+  padding: 10px 15px;
+
   border-radius: 8px;
   font-size: 18px;
   color: #fff;
