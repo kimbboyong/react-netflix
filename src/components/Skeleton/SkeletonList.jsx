@@ -7,10 +7,10 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const List = styled.div`
+export const List = styled.div`
   display: flex;
+  height: 100%;
   gap: 15px;
-  min-width: 1200px;
   margin-bottom: 30px;
 `;
 

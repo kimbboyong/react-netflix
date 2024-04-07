@@ -1,14 +1,12 @@
 import React from "react";
-import SkeletonBanner from "../../components/Skeleton/SkeletonBanner";
-import SkeletonList from "../../components/Skeleton/SkeletonList";
+import SkeletonMain from "../../components/Skeleton/SkeletonMain";
+import Banner from "./components/Banner/Banner";
 
 const HomePage = () => {
   return (
     <>
-      <SkeletonBanner />
-      <SkeletonList />
-      <SkeletonList />
-      <SkeletonList />
+      <Banner />
+      <SkeletonMain />
     </>
   );
 };
