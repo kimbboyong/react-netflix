@@ -5,6 +5,7 @@ import React from "react";
 // import Nav from "react-bootstrap/Nav";
 // import Navbar from "react-bootstrap/Navbar";
 import { Outlet } from "react-router-dom";
+import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import "./AppLayout.style.css";
 
@@ -13,6 +14,7 @@ const AppLayout = () => {
     <div>
       <Header />
       <Outlet />
+      <Footer />
     </div>
   );
 };
