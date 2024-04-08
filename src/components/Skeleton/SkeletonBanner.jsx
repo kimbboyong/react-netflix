@@ -17,9 +17,9 @@ const Inner = styled.div`
   gap: 15px;
 `;
 
-const SkeletonBanner = () => {
+const SkeletonBanner = ({ ModalHeight, ModalMargin }) => {
   return (
-    <Wrapper>
+    <Wrapper style={{ height: ModalHeight, marginBottom: ModalMargin }}>
       <Inner>
         <Skeleton
           sx={{

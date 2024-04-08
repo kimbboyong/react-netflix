@@ -16,8 +16,7 @@ import { Logo, Txt } from "./Header.style";
 
 const Wrapper = styled.div`
   .navBar {
-    padding: 0 20px;
-    height: 80px;
+    padding: 20px;
   }
   .container-fluid {
     gap: 20px;
