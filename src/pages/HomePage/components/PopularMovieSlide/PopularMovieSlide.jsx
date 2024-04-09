@@ -1,10 +1,10 @@
-import { usePopularMoviesQuery } from "../../../../hooks/usePopularMovies";
 import { styled } from "styled-components";
 
 import SkeletonList from "../../../../components/Skeleton/SkeletonList";
 import MovieSlider from "../../../../common/MovieSlider/MovieSlider";
 import TopRatedMovieSlide from "./TopRatedMovieSlide";
 import UpCommingMovieSlide from "./UpCommingMovieSlide";
+import { usePopularMoviesQuery } from "../../../../hooks/usePopularMovies";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -28,7 +28,7 @@ const PopularMovieSlide = () => {
 
   return (
     <Wrapper>
-      <MovieSlider title={"Popular Movies"} movies={data.results} />
+      <MovieSlider title={"Popular Movies"} movies={data?.results} />
       <TopRatedMovieSlide />
       <UpCommingMovieSlide />
     </Wrapper>

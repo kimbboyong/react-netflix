@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MovieCard from "../../pages/HomePage/components/MovieCard/MovieCard";
 import MovieModal from "../../pages/HomePage/components/MovieModal/MovieModal";
+import { styled } from "styled-components";
 
 import { Navigation, Pagination, A11y } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,7 +10,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "../../pages/HomePage/components/MovieCard/MovieCard.style.css";
-import { styled } from "styled-components";
 
 const CustomSwiperSlide = styled(SwiperSlide)`
   transition: all 0.4s;

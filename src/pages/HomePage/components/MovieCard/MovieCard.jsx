@@ -5,7 +5,7 @@ const MovieCard = ({ movie }) => {
   return (
     <Card>
       <img
-        src={`https://image.tmdb.org/t/p/original/${movie?.poster_path}`}
+        src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${movie?.poster_path}`}
         alt="card"
       />
       <Txt className="txt">Click</Txt>

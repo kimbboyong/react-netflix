@@ -1,9 +1,10 @@
 import React from "react";
-import { useTopRatedMovies } from "../../../../hooks/useTopRatedMovies";
+import { useUpComingMoviesQuery } from "../../../../hooks/useUpComminMovies";
 import SkeletonList from "../../../../components/Skeleton/SkeletonList";
 import MovieSlider from "../../../../common/MovieSlider/MovieSlider";
+
 const UpCommingMovieSlide = () => {
-  const { data, isLoading, isError, error } = useTopRatedMovies();
+  const { data, isLoading, isError, error } = useUpComingMoviesQuery();
   if (isLoading) {
     return <SkeletonList />;
   }
@@ -11,6 +12,7 @@ const UpCommingMovieSlide = () => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
+
   return (
     <div>
       <MovieSlider title={"UpComming Movies"} movies={data.results} />
