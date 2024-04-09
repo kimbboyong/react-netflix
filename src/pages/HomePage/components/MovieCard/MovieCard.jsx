@@ -8,7 +8,8 @@ const MovieCard = ({ movie }) => {
         src={`https://www.themoviedb.org/t/p/w600_and_h900_bestv2${movie?.poster_path}`}
         alt="card"
       />
-      <Txt className="txt">Click</Txt>
+
+      <Txt className="txt">Click!!</Txt>
     </Card>
   );
 };

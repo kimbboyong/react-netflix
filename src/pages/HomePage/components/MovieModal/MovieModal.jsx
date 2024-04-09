@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
+import { Button } from "react-bootstrap";
 import { styled } from "styled-components";
 import SkeletonBanner from "../../../../components/Skeleton/SkeletonBanner";
+import { useMovieGenreQuery } from "../../../../hooks/useMovieGenre";
+
 import useOnClickOutside from "../../../../hooks/useOnClickOutside";
 import "./MovieModal.style.css";
 
@@ -39,6 +42,7 @@ const MovieModal = ({
   first_air_date,
   vote_average,
   setModalOpen,
+  genre_ids,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -48,6 +52,17 @@ const MovieModal = ({
 
   const handleImageLoaded = () => {
     setIsLoading(false);
+  };
+  const { data: genreData } = useMovieGenreQuery();
+
+  const showGenre = (genreIdList) => {
+    if (!genreData) return [];
+    const genreNameList = genreIdList.map((id) => {
+      const genreObj = genreData.find((genre) => genre.id === id);
+      return genreObj.name;
+    });
+
+    return genreNameList;
   };
 
   return (
@@ -72,7 +87,11 @@ const MovieModal = ({
           <div className="modal__detail">
             <span>97% 일치</span> {release_date ? release_date : first_air_date}
           </div>
-
+          {showGenre(genre_ids).map((genre, idx) => (
+            <Button key={idx} variant="danger" className="mx-2">
+              {genre}
+            </Button>
+          ))}
           <h2 className="modal__title">{title ? title : name}</h2>
 
           <div className="modal__average">평점 : {vote_average}</div>
