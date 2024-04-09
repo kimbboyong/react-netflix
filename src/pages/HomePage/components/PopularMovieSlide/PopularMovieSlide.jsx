@@ -1,17 +1,10 @@
-import React, { useState } from "react";
 import { usePopularMoviesQuery } from "../../../../hooks/usePopularMovies";
-import MovieCard from "../MovieCard/MovieCard";
 import { styled } from "styled-components";
-import { Navigation, Pagination, A11y } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
-import "../MovieCard/MovieCard.style.css";
-import MovieModal from "../MovieModal/MovieModal";
 import SkeletonList from "../../../../components/Skeleton/SkeletonList";
+import MovieSlider from "../../../../common/MovieSlider/MovieSlider";
+import TopRatedMovieSlide from "./TopRatedMovieSlide";
+import UpCommingMovieSlide from "./UpCommingMovieSlide";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,28 +16,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const CustomSwiperSlide = styled(SwiperSlide)`
-  transition: all 0.4s;
-  cursor: pointer;
-
-  &:hover {
-    transform: scale(1.2);
-    position: relative;
-    background: #000;
-    z-index: 3;
-    .txt {
-      opacity: 1;
-    }
-    img {
-      filter: brightness(0.5);
-    }
-  }
-`;
-
 const PopularMovieSlide = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedMovie, setSelectedMovie] = useState({});
-
   const { data, isLoading, isError, error } = usePopularMoviesQuery();
   if (isLoading) {
     return <SkeletonList />;
@@ -54,46 +26,11 @@ const PopularMovieSlide = () => {
     return <h1>{error.message}</h1>;
   }
 
-  const handleMovieClick = async (movie) => {
-    setModalOpen(true);
-    setSelectedMovie(movie);
-  };
-
   return (
     <Wrapper>
-      <h3>popular movies</h3>
-      <Swiper
-        modules={[Navigation, Pagination, A11y]}
-        spaceBetween={10}
-        slidesPerGroup={2}
-        slidesPerView={1}
-        scrollbar={{ draggable: true }}
-        breakpoints={{
-          500: {
-            slidesPerView: 3,
-            slidesPerGroup: 3,
-          },
-          1024: {
-            slidesPerView: 5,
-            slidesPerGroup: 5,
-          },
-        }}
-        navigation
-      >
-        {data.results.map((movie, idx) => (
-          <CustomSwiperSlide
-            onClick={() => {
-              handleMovieClick(movie);
-            }}
-          >
-            <MovieCard movie={movie} key={idx} />
-          </CustomSwiperSlide>
-        ))}
-      </Swiper>
-
-      {modalOpen && (
-        <MovieModal {...selectedMovie} setModalOpen={setModalOpen} />
-      )}
+      <MovieSlider title={"Popular Movies"} movies={data.results} />
+      <TopRatedMovieSlide />
+      <UpCommingMovieSlide />
     </Wrapper>
   );
 };
