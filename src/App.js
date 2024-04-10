@@ -10,9 +10,9 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Intro />} />
+        {/* <Route path="/" element={<Intro />} /> */}
 
-        <Route path="/home" element={<AppLayout />}>
+        <Route path="/" element={<AppLayout />}>
           <Route index element={<HomePage />} />
 
           <Route path="movies">
