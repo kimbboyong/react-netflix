@@ -23,3 +23,20 @@
   background-color: #dc3545 !important;
   color: #fff !important;
 }
+
+.cards {
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: all 0.4s ease;
+}
+
+.cards:hover {
+  transform: scale(1.2);
+}
+
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}

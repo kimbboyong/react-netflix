@@ -1,10 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import AppLayout from "./layout/AppLayout";
 import HomePage from "./pages/HomePage/HomePage";
-import MoviePage from "./pages/Movies/MoviePage";
 import MovieDetailPage from "./pages/MovieDetail/MovieDetailPage";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import Intro from "./components/Intro/Intro";
+import MoviePage from "./pages/Movies/MoviePage";
 
 function App() {
   return (
