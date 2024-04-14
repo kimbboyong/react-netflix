@@ -28,6 +28,7 @@ export const Txt = styled.div`
 `;
 
 export const Logo = styled.div`
+  cursor: pointer;
   max-width: 150px;
   img {
     max-width: 100%;

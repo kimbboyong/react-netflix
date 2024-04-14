@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useSearchMovieQuery } from "../../hooks/useSearchMovie";
@@ -11,80 +11,119 @@ import "./Movies.css";
 const MoviePage = () => {
   const [query, setQuery] = useSearchParams();
   const [page, setPage] = useState(1);
-  const [genres, setGenres] = useState("");
-  const keyword = query.get("q");
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
+  const [filteredAndSortedMovies, setFilteredAndSortedMovies] = useState([]);
 
+  const keyword = query.get("q");
   const navigate = useNavigate();
+
+  const { data: genreData } = useMovieGenreQuery();
 
   const { data, isError, error } = useSearchMovieQuery({
     keyword,
     page,
   });
 
-  const handlePageClick = ({ selected }) => {
-    setPage(selected + 1);
-  };
-
-  const { data: genreData, isLoading } = useMovieGenreQuery();
-  if (isLoading) {
-    return <Spinner animation="border" variant="danger" className="spinner" />;
-  }
-  const onSubmit = (e) => {
-    e.preventDefault();
-  };
-
-  const showGenre = (genreIdList) => {
-    if (!genreData) return [];
-    return genreIdList
-      .map((id) => {
-        const genreObj = genreData.find((genre) => genre.id === id);
-        return genreObj ? genreObj.name : null;
-      })
-      .filter((name) => name !== null);
-  };
-
   const handleMovieDetail = (movie) => {
-    console.log("aaa");
     navigate(`/movies/${movie.id}`);
   };
+
+  const handlePageClick = (data) => {
+    setPage(data.selected + 1);
+    setQuery({ q: keyword, page: data.selected + 1 });
+  };
+
+  useEffect(() => {
+    if (!data?.results) return;
+
+    const showGenre = (genreIdList) => {
+      if (!genreData) return [];
+      return genreIdList
+        .map((id) => {
+          const genreObj = genreData.find((genre) => genre.id === id);
+          return genreObj ? genreObj.name : null;
+        })
+        .filter((name) => name !== null);
+    };
+
+    const filterMoviesByGenre = (movies) => {
+      return movies.filter((movie) => {
+        const movieGenres = showGenre(movie.genre_ids);
+        return selectedGenre ? movieGenres.includes(selectedGenre) : true;
+      });
+    };
+
+    const sortMovies = (movies) => {
+      let sortedMovies = [...movies];
+      switch (sortOrder) {
+        case "latest":
+          sortedMovies.sort(
+            (a, b) => new Date(b.release_date) - new Date(a.release_date)
+          );
+          break;
+        case "oldest":
+          sortedMovies.sort(
+            (a, b) => new Date(a.release_date) - new Date(b.release_date)
+          );
+          break;
+        case "popular":
+          sortedMovies.sort((a, b) => b.popularity - a.popularity);
+          break;
+        default:
+          break;
+      }
+      return sortedMovies;
+    };
+
+    const filteredMovies = filterMoviesByGenre(data.results);
+    const sortedMovies = sortMovies(filteredMovies);
+    setFilteredAndSortedMovies(sortedMovies);
+  }, [data, selectedGenre, sortOrder, genreData]);
 
   return (
     <Container>
       <Row>
-        <Col lg={4} xs={12}>
-          <Form className="d-flex mb-5" onSubmit={onSubmit}>
-            <Form.Control
-              type="text"
-              placeholder="장르를 입력해주세요."
-              className="me-2 "
-              aria-label="Search"
-              variant="outline-light"
-              value={genres}
-              onChange={(e) => setGenres(e.target.value)}
-            />
-            <Button type="submit" variant="outline-danger">
-              Search
-            </Button>
-          </Form>
+        <Col lg={4} xs={12} className="mb-5">
+          <Form.Select
+            aria-label="Genre select"
+            className="me-2 mb-2 custom-select"
+            value={selectedGenre}
+            onChange={(e) => setSelectedGenre(e.target.value)}
+          >
+            <option value="">모든 장르</option>
+            {genreData &&
+              genreData.map((genre) => (
+                <option key={genre.id} value={genre.name}>
+                  {genre.name}
+                </option>
+              ))}
+          </Form.Select>
+          <Form.Select
+            aria-label="Sort order"
+            className="me-2 custom-select"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
+            <option value="">정렬 방식</option>
+            <option value="latest">최신순</option>
+            <option value="oldest">오래된 순</option>
+            <option value="popular">인기순</option>
+          </Form.Select>
         </Col>
         <Col lg={8} xs={12}>
           <Row className="card-wrap">
-            {data?.results
-              .filter((movie) => {
-                const movieGenres = showGenre(movie.genre_ids);
-                return genres ? movieGenres.includes(genres) : true;
-              })
-              .map((movie, idx) => (
-                <Col
-                  key={idx}
-                  lg={4}
-                  xs={12}
-                  onClick={() => handleMovieDetail(movie)}
-                  className="mb-3 cards"
-                >
-                  <MovieCard movie={movie} />
-                </Col>
-              ))}
+            {filteredAndSortedMovies.map((movie, idx) => (
+              <Col
+                key={idx}
+                lg={4}
+                xs={12}
+                onClick={() => handleMovieDetail(movie)}
+                className="mb-3 cards"
+              >
+                <MovieCard movie={movie} />
+              </Col>
+            ))}
           </Row>
         </Col>
         <ReactPaginate

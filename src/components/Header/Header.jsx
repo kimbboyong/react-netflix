@@ -34,7 +34,11 @@ const Header = () => {
     <Wrapper>
       <Navbar className="navBar" expand="lg" variant="dark">
         <Container fluid>
-          <Logo>
+          <Logo
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             <img src="/images/logo.png" alt="" />
           </Logo>
           <Navbar.Toggle aria-controls="navbarScroll" />
